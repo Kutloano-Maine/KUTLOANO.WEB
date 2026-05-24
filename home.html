@@ -7,32 +7,45 @@
 
     <title>KUTLOANO.STUDIO</title>
     <meta name="title" content="KUTLOANO.STUDIO">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!--Header and Navigation -->
-    <header class="header" data-header>
-        <div class="nav-container">
-              <a href="#home" class="logo">KUTLOANO</a>
-
-          <button class="nav-toggle" data-nav-toggler data-nav-toggle-btn aria-label="Toggle menu">
-            <span class="line line-1"></span>
-            <span class="line line-2"></span>
-        </button>
-
-       <nav class="nav">
-       
-
-        <ul class="navbar-list">
-            <li><a href="#" class="navbar-link">HOME</a></li>
-            <li><a href="#" class="navbar-link">ABOUT</a></li>
-            <li><a href="#" class="navbar-link">SERVICES</a></li>
-            <li><a href="#" class="navbar-link">PROJECTS</a></li>
-            <li><a href="#" class="navbar-link">REACH OUT</a></li>
-        </ul>
-       </nav>
-        </div>
-       
+    <header class="header">
+       <div class="logo">KUTLOANO</div>
+       <button class="nav-button" id="nav-button">MENU</button>
     </header>
+    <div class="backdrop" id="backdrop"></div>
+    <nav class="menu-overlay" id="menu-overlay">
+    <div class="overlay-top">
+        <span>NAVIGATE</span>
+        <button class="close-btn" id="close-btn">CLOSE</button>
+    </div>
+
+    <div class="nav-links">
+     <a href="#home">HOME</a>
+     <a href="#about">ABOUT</a>
+      <a href="#services">SERVICES</a>
+       <a href="#projects">PROJECTS</a>
+        <a href="#contact">CONTACT</a>
+    </div>
+
+    <div class="overlay-footer">
+        KUTLOANO.STUDIO
+    </div>
+
+    </nav>
+    <main>
+
+
+        <section class="hero" id="home">
+         
+        </section>
+    </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
