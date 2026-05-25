@@ -27,15 +27,62 @@ links.forEach(link => {
 //my approach section
     const items = document.querySelectorAll(".approach-item")
     const orb=document.querySelector(".cursor-orb")
+    const revealElements = document.querySelectorAll(".reveal")
 
-    items.forEach((item) => {
-      item.addEventListener('click', () => {
-        items.forEach((other) => other.classList.remove('active'));
-        item.classList.add('active');
+    function setActiveItem(activeItem) {
+      items.forEach((item) => {
+        const isActive = item === activeItem;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-expanded', isActive);
+
+        const icon = item.querySelector('.icon');
+        if (icon) icon.textContent = isActive ? '-' : '+';
       });
+    }
+
+    items.forEach((item, index) => {
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('aria-expanded', item.classList.contains('active'));
+
+      const icon = item.querySelector('.icon');
+      if (icon) icon.textContent = item.classList.contains('active') ? '-' : '+';
+
+      item.addEventListener('click', () => setActiveItem(item));
+      item.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          setActiveItem(item);
+        }
+      });
+
+      if (index === 0 && !document.querySelector('.approach-item.active')) {
+        setActiveItem(item);
+      }
     });
 
-    window.addEventListener('mousemove', (event) => {
+  window.addEventListener('mousemove', (event) => {
+      if (!orb) return;
       orb.style.left = `${event.clientX}px`;
       orb.style.top = `${event.clientY}px`;
+    });
+
+      const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else {
+            entry.target.classList.remove('visible');
+          }
+        });
+      },
+      {
+        threshold: 0.18
+      }
+    );
+
+    revealElements.forEach((element, index) => {
+      element.style.transitionDelay = `${index * 0.045}s`;
+      observer.observe(element);
     });
