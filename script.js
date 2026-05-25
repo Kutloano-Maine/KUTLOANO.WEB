@@ -23,3 +23,19 @@ backdrop.addEventListener("click", closeMenu)
 links.forEach(link => {
       link.addEventListener("click", closeMenu);
     });
+
+//my approach section
+    const items = document.querySelectorAll(".approach-item")
+    const orb=document.querySelector(".cursor-orb")
+
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        items.forEach((other) => other.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    window.addEventListener('mousemove', (event) => {
+      orb.style.left = `${event.clientX}px`;
+      orb.style.top = `${event.clientY}px`;
+    });
