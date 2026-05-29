@@ -28,6 +28,8 @@ links.forEach(link => {
     const items = document.querySelectorAll(".approach-item")
     const orb=document.querySelector(".cursor-orb")
     const revealElements = document.querySelectorAll(".reveal")
+    const contactForm = document.getElementById("contact-form")
+    const formStatus = document.getElementById("form-status")
 
     function setActiveItem(activeItem) {
       items.forEach((item) => {
@@ -86,3 +88,43 @@ links.forEach(link => {
       element.style.transitionDelay = `${index * 0.045}s`;
       observer.observe(element);
     });
+
+    if (contactForm && formStatus) {
+      contactForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const submitButton = contactForm.querySelector(".submit-btn");
+        const formData = new FormData(contactForm);
+        const originalButtonText = submitButton.textContent;
+
+        formStatus.textContent = "Sending message...";
+        formStatus.className = "form-status";
+        submitButton.disabled = true;
+        submitButton.textContent = "SENDING";
+
+        try {
+          const response = await fetch(contactForm.action, {
+            method: "POST",
+            headers: {
+              Accept: "application/json"
+            },
+            body: formData
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            contactForm.reset();
+            formStatus.textContent = "Message sent. I will get back to you soon.";
+            formStatus.classList.add("success");
+          } else {
+            throw new Error(result.message || "Message could not be sent.");
+          }
+        } catch (error) {
+          formStatus.textContent = "Something went wrong. Please try again or email me directly.";
+          formStatus.classList.add("error");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = originalButtonText;
+        }
+      });
+    }
