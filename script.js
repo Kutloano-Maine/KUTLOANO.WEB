@@ -30,6 +30,43 @@ links.forEach(link => {
     const revealElements = document.querySelectorAll(".reveal")
     const contactForm = document.getElementById("contact-form")
     const formStatus = document.getElementById("form-status")
+    const particleField = document.getElementById("particle-field")
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    function createParticles() {
+      if (!particleField) return;
+
+      const particleCount = window.innerWidth < 760 ? 26 : 46;
+      const tones = [
+        ["rgba(0, 87, 255, 0.46)", "rgba(0, 87, 255, 0.18)"],
+        ["rgba(8, 8, 8, 0.18)", "rgba(8, 8, 8, 0.08)"],
+        ["rgba(255, 255, 255, 0.86)", "rgba(255, 255, 255, 0.24)"]
+      ];
+
+      particleField.innerHTML = "";
+
+      for (let index = 0; index < particleCount; index += 1) {
+        const particle = document.createElement("span");
+        const tone = tones[index % tones.length];
+        const size = 3 + Math.random() * 8;
+
+        particle.className = "particle";
+        particle.style.setProperty("--x", `${Math.random() * 100}%`);
+        particle.style.setProperty("--y", `${Math.random() * 100}%`);
+        particle.style.setProperty("--size", `${size}px`);
+        particle.style.setProperty("--tone", tone[0]);
+        particle.style.setProperty("--glow", tone[1]);
+        particle.style.setProperty("--alpha", `${0.32 + Math.random() * 0.34}`);
+        particle.style.setProperty("--duration", `${8 + Math.random() * 10}s`);
+        particle.style.setProperty("--delay", `${Math.random() * -12}s`);
+        particle.style.setProperty("--drift-x", `${(Math.random() - 0.5) * 120}px`);
+        particle.style.setProperty("--drift-y", `${(Math.random() - 0.5) * 150}px`);
+
+        particleField.appendChild(particle);
+      }
+    }
+
+    createParticles()
 
     function setActiveItem(activeItem) {
       items.forEach((item) => {
@@ -67,6 +104,13 @@ links.forEach(link => {
       if (!orb) return;
       orb.style.left = `${event.clientX}px`;
       orb.style.top = `${event.clientY}px`;
+
+      if (particleField && !reduceMotion) {
+        const x = (event.clientX / window.innerWidth - 0.5) * -18;
+        const y = (event.clientY / window.innerHeight - 0.5) * -18;
+        particleField.style.setProperty("--particle-x", `${x}px`);
+        particleField.style.setProperty("--particle-y", `${y}px`);
+      }
     });
 
       const observer = new IntersectionObserver(

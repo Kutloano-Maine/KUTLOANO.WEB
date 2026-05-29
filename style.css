@@ -39,6 +39,83 @@
       letter-spacing: 0;
     }
 
+    .particle-field {
+      position: fixed;
+      inset: 0;
+      z-index: 12;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0.84;
+      transform: translate3d(var(--particle-x, 0), var(--particle-y, 0), 0);
+      transition: transform 1.4s cubic-bezier(0.17, 0.67, 0, 1.01);
+    }
+
+    .particle-field::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(0, 87, 255, 0.085), transparent 18rem),
+        radial-gradient(circle at 82% 68%, rgba(8, 8, 8, 0.05), transparent 20rem);
+      opacity: 0.74;
+      animation: particleGlow 16s ease-in-out infinite alternate;
+    }
+
+    .particle {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: var(--size);
+      height: var(--size);
+      border-radius: 999px;
+      background: var(--tone);
+      box-shadow: 0 0 16px var(--glow);
+      opacity: var(--alpha);
+      transform: translate3d(0, 0, 0);
+      animation: particleFloat var(--duration) ease-in-out infinite alternate;
+      animation-delay: var(--delay);
+    }
+
+    .particle::after {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border: 1px solid rgba(0, 87, 255, 0.08);
+      border-radius: inherit;
+      transform: scale(0.62);
+      opacity: 0.42;
+    }
+
+    @keyframes particleFloat {
+      from {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      to {
+        transform: translate3d(var(--drift-x), var(--drift-y), 0) scale(1.18);
+      }
+    }
+
+    @keyframes particleGlow {
+      from {
+        transform: translate3d(-1.5%, -1%, 0) scale(1);
+      }
+      to {
+        transform: translate3d(1.5%, 1%, 0) scale(1.04);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .particle-field {
+        transform: none;
+        transition: none;
+      }
+
+      .particle-field::before,
+      .particle {
+        animation: none;
+      }
+    }
+
     .top-line {
       width: 94%;
       height: 1px;
