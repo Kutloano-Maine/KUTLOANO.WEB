@@ -33,10 +33,36 @@
       min-height: 100vh;
       background: var(--bg);
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Syne", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       overflow-x: hidden;
       font-weight: 400;
       letter-spacing: 0;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    a,
+    button,
+    input,
+    textarea,
+    label,
+    span {
+      letter-spacing: 0;
+    }
+
+    p {
+      max-width: 68ch;
+      color: #4f4f49;
+      line-height: 1.65;
+    }
+
+    .scramble-heading {
+      font-kerning: normal;
+      text-rendering: geometricPrecision;
     }
 
     .particle-field {
@@ -341,8 +367,8 @@ display: flex;
     }
 
     .hero-title{
-      font-size: clamp(4.5rem, 12.8vw, 13.5rem);
-      line-height: 0.78;
+      font-size: clamp(3.8rem, 10vw, 9.6rem);
+      line-height: 0.84;
       letter-spacing: 0;
       max-width: 980px;
       font-weight: 800;
@@ -399,7 +425,7 @@ display: flex;
       }
 
       .hero-title {
-        font-size: clamp(4rem, 21vw, 7.3rem);
+        font-size: clamp(3.25rem, 16vw, 5.8rem);
         letter-spacing: 0;
       }
 
@@ -492,7 +518,7 @@ display: flex;
     }
 
 .hero-title{
-      font-size:clamp(5rem, 13vw, 12rem);
+      font-size:clamp(3.8rem, 9vw, 8.4rem);
       line-height:0.9;
       font-weight:800;
       letter-spacing:0;
@@ -577,24 +603,49 @@ display: flex;
 
 /*APPROACH SECTION*/
   .approach-intro {
-      max-width: 720px;
+      width: min(100%, 1120px);
       margin-bottom: clamp(4.5rem, 8vw, 7rem);
+      padding-inline: 3vw;
     }
 
        .eyebrow {
-      color: #8f8f89;
-      font-size: 0.8rem;
+      color: #7f7f79;
+      font-size: 0.76rem;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.12em;
       margin-bottom: 1rem;
+      font-weight: 700;
     }
 
      h1 {
-      font-size: clamp(2.8rem, 6.4vw, 6.8rem);
-      line-height: 1;
+      font-size: clamp(2.35rem, 4.8vw, 4.85rem);
+      line-height: 1.03;
       letter-spacing: 0;
       font-weight: 700;
       max-width: 980px;
+    }
+
+    .approach-title {
+      max-width: 1120px;
+      text-transform: lowercase;
+    }
+
+    .approach-title-line {
+      display: block;
+      width: fit-content;
+    }
+
+    .approach-title .line-one {
+      margin-left: 0;
+    }
+
+    .approach-title .line-two {
+      margin-left: clamp(2.2rem, 13vw, 12rem);
+    }
+
+    .approach-title .line-three {
+      margin-left: clamp(4rem, 26vw, 24rem);
+      max-width: 760px;
     }
 
      .approach-list {
@@ -698,10 +749,11 @@ display: flex;
       opacity: 0;
       transform: translateY(60px);
       transition: opacity 0.7s cubic-bezier(0.17, 0.55, 0.55, 1), transform 0.7s cubic-bezier(0.17, 0.55, 0.55, 1);
-      font-size: clamp(3.2rem, 8vw, 9rem);
-      line-height: 0.95;
+      font-size: clamp(2.25rem, 5.3vw, 5.6rem);
+      line-height: 0.98;
       letter-spacing: 0;
       font-weight: 700;
+      text-transform: uppercase;
     }
 
     .approach-description {
@@ -710,8 +762,8 @@ display: flex;
       height: 0;
       overflow: hidden;
       color: #686862;
-      font-size: clamp(1rem, 1.4vw, 1.25rem);
-      line-height: 1.7;
+      font-size: clamp(0.98rem, 1.2vw, 1.14rem);
+      line-height: 1.68;
       font-weight: 400;
       letter-spacing: 0;
       transition: max-height 0.55s var(--cubic-out), margin-top 0.55s var(--cubic-out), opacity 0.35s ease, transform 0.55s var(--cubic-out);
@@ -789,6 +841,23 @@ display: flex;
         padding: 1.2rem;
       }
 
+      .approach-intro {
+        padding-inline: 1.2rem;
+      }
+
+      .approach-title {
+        font-size: clamp(2.1rem, 10.5vw, 3.85rem);
+      }
+
+      .approach-title .line-two,
+      .approach-title .line-three {
+        margin-left: 0;
+      }
+
+      .approach-title-line {
+        width: auto;
+      }
+
       .logo-strip {
         margin-bottom: 6rem;
         gap: 2.5rem;
@@ -805,7 +874,7 @@ display: flex;
       }
 
       .title-wrap h2 {
-        font-size: clamp(3rem, 18vw, 5.8rem);
+        font-size: clamp(2.1rem, 11vw, 3.8rem);
       }
 
     }
@@ -840,8 +909,12 @@ display: flex;
 
 .technologies-title{
   text-align: center;
-  font-weight: 700;
+  font-size: clamp(2.35rem, 5vw, 5.2rem);
+  line-height: 1;
+  font-weight: 800;
   letter-spacing: 0;
+  text-transform: uppercase;
+  margin-bottom: clamp(2.4rem, 5vw, 4.8rem);
 }    
 
 /*PROJECTS SECTION*/
@@ -860,6 +933,7 @@ display: flex;
 
 .projects-header h1 {
   max-width: 1080px;
+  text-transform: uppercase;
 }
 
 .projects-list {
@@ -927,9 +1001,9 @@ display: flex;
 
 .project-type {
   color: #8f8f89;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: clamp(0.8rem, 1.5vw, 1.2rem);
   transform: translateY(22px);
@@ -938,8 +1012,8 @@ display: flex;
 }
 
 .project-copy h2 {
-  font-size: clamp(3.2rem, 8.6vw, 9.5rem);
-  line-height: 0.88;
+  font-size: clamp(2.25rem, 5.6vw, 5.8rem);
+  line-height: 0.96;
   font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -950,8 +1024,8 @@ display: flex;
 .project-description {
   max-width: 620px;
   color: #64645e;
-  font-size: clamp(0.98rem, 1.25vw, 1.18rem);
-  line-height: 1.7;
+  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
+  line-height: 1.65;
   margin-top: 1.4rem;
   opacity: 0;
   transform: translateY(24px);
@@ -1041,6 +1115,7 @@ body:has(.project-card:hover) .cursor-orb {
 
 .contact-heading h1 {
   max-width: 1120px;
+  text-transform: uppercase;
 }
 
 .contact-grid {
@@ -1066,9 +1141,9 @@ body:has(.project-card:hover) .cursor-orb {
 .contact-copy p {
   max-width: 500px;
   color: #4d4d47;
-  font-size: clamp(1.08rem, 1.7vw, 1.65rem);
-  line-height: 1.45;
-  font-weight: 500;
+  font-size: clamp(1.02rem, 1.35vw, 1.34rem);
+  line-height: 1.55;
+  font-weight: 400;
 }
 
 .contact-email {
@@ -1100,9 +1175,9 @@ body:has(.project-card:hover) .cursor-orb {
 
 .form-row label {
   color: #777771;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -1115,7 +1190,7 @@ body:has(.project-card:hover) .cursor-orb {
   color: var(--ink);
   padding: 0.95rem 0;
   font: inherit;
-  font-size: clamp(1.15rem, 2.3vw, 2.1rem);
+  font-size: clamp(1.02rem, 1.65vw, 1.42rem);
   line-height: 1.2;
   outline: none;
   transition: border-color 0.25s ease, background 0.25s ease;
@@ -1207,7 +1282,7 @@ body:has(.contact a:hover, .contact button:hover, .contact input:hover, .contact
   }
 
   .project-copy h2 {
-    font-size: clamp(3rem, 17vw, 6.6rem);
+    font-size: clamp(2.15rem, 10.5vw, 4rem);
   }
 
   .project-media {

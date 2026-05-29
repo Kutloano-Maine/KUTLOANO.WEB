@@ -28,10 +28,13 @@ links.forEach(link => {
     const items = document.querySelectorAll(".approach-item")
     const orb=document.querySelector(".cursor-orb")
     const revealElements = document.querySelectorAll(".reveal")
+    const scrambleHeadings = document.querySelectorAll(".scramble-heading")
     const contactForm = document.getElementById("contact-form")
     const formStatus = document.getElementById("form-status")
     const particleField = document.getElementById("particle-field")
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const scrambleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    const scrambleOriginals = new WeakMap()
 
     function createParticles() {
       if (!particleField) return;
@@ -67,6 +70,89 @@ links.forEach(link => {
     }
 
     createParticles()
+
+    function getScrambleTextNodes(element) {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          return node.nodeValue.trim()
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      const nodes = [];
+      let node = walker.nextNode();
+
+      while (node) {
+        nodes.push(node);
+        node = walker.nextNode();
+      }
+
+      return nodes;
+    }
+
+    function scrambleText(element) {
+      const textNodes = getScrambleTextNodes(element);
+      const storedOriginals = scrambleOriginals.get(element);
+      const originals = storedOriginals && storedOriginals.length === textNodes.length
+        ? storedOriginals
+        : textNodes.map((node) => node.nodeValue);
+
+      scrambleOriginals.set(element, originals);
+
+      if (element.scrambleTimer) {
+        window.clearInterval(element.scrambleTimer);
+        textNodes.forEach((node, index) => {
+          node.nodeValue = originals[index];
+        });
+      }
+
+      if (reduceMotion) {
+        textNodes.forEach((node, index) => {
+          node.nodeValue = originals[index];
+        });
+        return;
+      }
+
+      let frame = 0;
+      const frameTotal = 28;
+      const frameStep = 2;
+
+      element.scrambleTimer = window.setInterval(() => {
+        textNodes.forEach((node, nodeIndex) => {
+          const original = originals[nodeIndex];
+          const resolvedLength = Math.floor((frame / frameTotal) * original.length);
+
+          node.nodeValue = original
+            .split("")
+            .map((character, characterIndex) => {
+              if (character === " ") return " ";
+              if (characterIndex < resolvedLength) return character;
+              return scrambleCharacters[Math.floor(Math.random() * scrambleCharacters.length)];
+            })
+            .join("");
+        });
+
+        frame += frameStep;
+
+        if (frame > frameTotal) {
+          window.clearInterval(element.scrambleTimer);
+          element.scrambleTimer = null;
+          textNodes.forEach((node, index) => {
+            node.nodeValue = originals[index];
+          });
+        }
+      }, 32);
+    }
+
+    function scrambleRevealHeadings(target) {
+      const headings = target.classList.contains("scramble-heading")
+        ? [target]
+        : [...target.querySelectorAll(".scramble-heading")];
+
+      headings.forEach((heading, index) => {
+        window.setTimeout(() => scrambleText(heading), index * 70);
+      });
+    }
 
     function setActiveItem(activeItem) {
       items.forEach((item) => {
@@ -118,6 +204,7 @@ links.forEach(link => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            scrambleRevealHeadings(entry.target);
           } else {
             entry.target.classList.remove('visible');
           }
@@ -131,6 +218,12 @@ links.forEach(link => {
     revealElements.forEach((element, index) => {
       element.style.transitionDelay = `${index * 0.045}s`;
       observer.observe(element);
+    });
+
+    scrambleHeadings.forEach((heading) => {
+      if (!heading.closest(".reveal")) {
+        observer.observe(heading);
+      }
     });
 
     if (contactForm && formStatus) {
