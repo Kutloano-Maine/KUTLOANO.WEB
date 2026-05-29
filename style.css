@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: none !important;
 }
 :root{
 
@@ -666,20 +667,23 @@ display: flex;
 
     .cursor-orb {
       position: fixed;
-      width: 18px;
-      height: 18px;
+      left: 50%;
+      top: 50%;
+      width: 26px;
+      height: 26px;
       border-radius: 999px;
-      background: #111;
+      background: #fff;
       pointer-events: none;
-      z-index: 20;
+      z-index: 5000;
       transform: translate(-50%, -50%);
       mix-blend-mode: difference;
-      transition: width 0.25s ease, height 0.25s ease;
+      transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+      opacity: 1;
     }
 
-     body:has(.approach-item:hover) .cursor-orb {
-      width: 54px;
-      height: 54px;
+     body:has(a:hover, button:hover, .approach-item:hover) .cursor-orb {
+      width: 46px;
+      height: 46px;
     }
 
     @keyframes drawLine {
@@ -727,6 +731,9 @@ display: flex;
         font-size: clamp(3rem, 18vw, 5.8rem);
       }
 
+    }
+
+    @media (pointer: coarse) {
       .cursor-orb {
         display: none;
       }
