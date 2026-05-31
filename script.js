@@ -27,7 +27,8 @@ links.forEach(link => {
 //my approach section
     const items = document.querySelectorAll(".approach-item")
     const orb=document.querySelector(".cursor-orb")
-    const revealElements = document.querySelectorAll(".reveal")
+    const revealElements = document.querySelectorAll(".reveal:not(.site-footer)")
+    const footerReveal = document.querySelector(".site-footer.reveal")
     const scrambleHeadings = document.querySelectorAll(".scramble-heading")
     const contactForm = document.getElementById("contact-form")
     const formStatus = document.getElementById("form-status")
@@ -219,6 +220,27 @@ links.forEach(link => {
       element.style.transitionDelay = `${index * 0.045}s`;
       observer.observe(element);
     });
+
+    if (footerReveal) {
+      const footerObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              scrambleRevealHeadings(entry.target);
+            } else {
+              entry.target.classList.remove("visible");
+            }
+          });
+        },
+        {
+          rootMargin: "0px 0px 34% 0px",
+          threshold: 0.01
+        }
+      );
+
+      footerObserver.observe(footerReveal);
+    }
 
     scrambleHeadings.forEach((heading) => {
       if (!heading.closest(".reveal")) {
